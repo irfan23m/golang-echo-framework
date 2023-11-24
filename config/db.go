@@ -4,18 +4,19 @@ import (
 	"echo-framework/models"
 	"fmt"
 	"log"
+	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "docker-postgres"
-	password = "docker-postgres"
-	dbname   = "postgresql"
-)
+// const (
+// 	host     = "localhost"
+// 	port     = 5432
+// 	user     = "docker-postgres"
+// 	password = "docker-postgres"
+// 	dbname   = "postgresql"
+// )
 
 var (
 	db  *gorm.DB
@@ -46,7 +47,15 @@ var (
 // }
 
 func StartDB() {
-	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", host, user, password, dbname, port)
+	var (
+		host     = os.Getenv("DB_HOST")
+		port     = os.Getenv("DB_PORT")
+		user     = os.Getenv("DB_USER")
+		password = os.Getenv("DB_PASSWORD")
+		dbname   = os.Getenv("DB_NAME")
+	)
+
+	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, dbname, port)
 
 	db, err = gorm.Open(postgres.Open(config), &gorm.Config{})
 	if err != nil {

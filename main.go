@@ -5,13 +5,21 @@ import (
 	"echo-framework/controller"
 	_ "echo-framework/docs"
 	"echo-framework/middlewares"
+	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 func init() {
+	// load env first
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
+
 	// initialize connect to db
 	// config.Connect()
 	config.StartDB()
@@ -60,6 +68,7 @@ func main() {
 	// Route for swagger
 	r.GET("/swagger/*", echoSwagger.WrapHandler)
 
-	r.Logger.Fatal(r.Start(":9000"))
+	var PORT = os.Getenv("SERVER_PORT")
+	r.Logger.Fatal(r.Start(":" + PORT))
 
 }
