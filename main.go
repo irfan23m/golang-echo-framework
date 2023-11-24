@@ -68,7 +68,7 @@ func main() {
 	// Route for swagger
 	r.GET("/swagger/*", echoSwagger.WrapHandler)
 
-	var PORT = os.Getenv("SERVER_PORT")
+	var PORT = os.Getenv("PORT")
 	r.Logger.Fatal(r.Start(":" + PORT))
 
 }
