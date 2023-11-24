@@ -1,0 +1,50 @@
+basePath: /
+definitions:
+  models.Employee:
+    properties:
+      ID:
+        type: integer
+      age:
+        type: integer
+      division:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+    type: object
+host: localhost:9000
+info:
+  contact:
+    email: irfan.email@email.com
+    name: API Support
+  description: this is a sample service rest echo-framework
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Echo-Framework API
+  version: "1.0"
+paths:
+  /employee:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Employee
+        in: body
+        name: Employee
+        required: true
+        schema:
+          $ref: '#/definitions/models.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Employee'
+      summary: Create Employee
+      tags:
+      - employee
+swagger: "2.0"
